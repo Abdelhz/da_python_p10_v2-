@@ -19,4 +19,6 @@ from django.urls import path
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    # Include the URLs from the 'softdesk_api' app
+    path('', include('softdesk_api')),
 ]
