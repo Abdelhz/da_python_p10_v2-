@@ -16,11 +16,15 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
+from rest_framework import routers
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     # Include the URLs from the 'softdesk_api' app
-    path('', include('projects.urls')),
+    #path('', include('projects.urls')),
+    #path('users/', include('users.urls')),
+    #path('issues/', include('issues.urls')),
     path('users/', include('users.urls')),
-    path('issues/', include('issues.urls')),
+    path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 ]
