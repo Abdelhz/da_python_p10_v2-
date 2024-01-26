@@ -14,19 +14,11 @@ class Project(models.Model):
     project_type = models.CharField(max_length=20, choices=PROJECT_TYPE_CHOICES)
     project_author = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='authored_projects')
     created_time = models.DateTimeField(auto_now_add=True)
-    updated_time = models.DateTimeField(auto_now=True) 
-
-    class Meta:
-        permissions = [
-            #("view_project", "Can view project"),
-            #("edit_project", "Can edit project"),
-            #("edit_project", "Can edit project"),
-            # i can add more permissions as needed
-        ]
+    updated_time = models.DateTimeField(auto_now=True)
         
 
 class Contributor(models.Model):
-    PERMISSION_CHOICES = [
+    PROJECT_PERMISSION_CHOICES = [
         ('can_view', 'Can_View'),
         ('can_edit', 'Can_Edit'),
         ('can_delete', 'Can_Delete'),
@@ -39,8 +31,9 @@ class Contributor(models.Model):
     ]
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
-    date_given_permission = models.DateField(null=True, blank=True)
     role = models.CharField(max_length=20, choices=role_choices, default='contributor')
-    permission = models.CharField(max_length=20, choices=PERMISSION_CHOICES)
+    permission = models.CharField(max_length=20, choices=PROJECT_PERMISSION_CHOICES)
+    can_assign_issues = models.BooleanField(default=False)
     created_time = models.DateTimeField(auto_now_add=True)
-    updated_time = models.DateTimeField(auto_now=True) 
+    updated_time = models.DateTimeField(auto_now=True)
+    #date_given_permission = models.DateField(null=True, blank=True)

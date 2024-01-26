@@ -1,8 +1,11 @@
-from django.urls import path
-from . import views
+from django.urls import path, include
+from .views import IssuesViewSet, CommentsViewSet
+from rest_framework import routers
+
+router = routers.DefaultRouter()
+router.register(r'issues', IssuesViewSet)
+router.register(r'comments', CommentsViewSet)
 
 urlpatterns = [
-   # path('issues/', views.issues_list, name='issues_list'),
-    #path('comments/', views.comments, name='comments_list'),
-
+    path('', include(router.urls)),
 ]

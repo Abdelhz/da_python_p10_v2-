@@ -36,15 +36,8 @@ class Issue(models.Model):
     assignee = models.ForeignKey(CustomUser, related_name='assigned_issues', on_delete=models.CASCADE)
     # date and time of the issue
     created_time = models.DateTimeField(auto_now_add=True)
-    updated_time = models.DateTimeField(auto_now=True) 
+    updated_time = models.DateTimeField(auto_now=True)
 
-    class Meta:
-        permissions = [
-            #("view_issue", "Can view issue"),
-            #("edit_issue", "Can edit issue"),
-            #("edit_issue", "Can edit issue"),
-            # add more permissions as needed
-        ]
 
 class Comment(models.Model):
     description = models.TextField()
@@ -53,10 +46,4 @@ class Comment(models.Model):
     created_time = models.DateTimeField(auto_now_add=True)
     updated_time = models.DateTimeField(auto_now=True)
     # you might also want a field to track when the comment was created
-    class Meta:
-        permissions = [
-            #("view_comment", "Can view comment"),
-            #("edit_comment", "Can edit comment"),
-            # add more permissions as needed
-        ]
         

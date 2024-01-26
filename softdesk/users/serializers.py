@@ -7,7 +7,7 @@ from datetime import date
 class CustomUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
-        fields = ['first_name', 'last_name', 'date_of_birth', 'email', 'password', 'can_be_contacted', 'can_data_be_shared', 'created_time', 'updated_time']
+        fields = ['username', 'first_name', 'last_name', 'date_of_birth', 'email', 'password', 'can_be_contacted', 'can_data_be_shared', 'created_time', 'updated_time']
         extra_kwargs = {'password': {'write_only': True}}
     
     def validate(self, data):
