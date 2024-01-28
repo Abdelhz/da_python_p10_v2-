@@ -27,7 +27,7 @@ class IssuesViewSet(viewsets.ModelViewSet):
         """
         Return the queryset of issues for the specified project ID.
         """
-        return Issue.objects.filter(project_id=self.kwargs['project_pk'])   
+        return Issue.objects.filter(project_id=self.kwargs['project_pk'])
 
     @action(detail=True, methods=['post'])
     def assign(self, request, pk=None):

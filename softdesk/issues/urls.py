@@ -11,9 +11,6 @@ from rest_framework_nested import routers as nested_routers
 from projects.views import ProjectViewSet
 from .views import IssuesViewSet, CommentsViewSet
 
-#router = routers.DefaultRouter()
-#router.register(r'issues', IssuesViewSet)
-#router.register(r'comments', CommentsViewSet)
 router = routers.DefaultRouter()
 router.register(r'projects', ProjectViewSet)
 
