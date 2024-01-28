@@ -1,9 +1,28 @@
+"""
+This module defines the data models for this Django app.
+
+It includes models for CustomUser, Project, Contributor, Issue, and Comment.
+Each model represents a different aspect of the app, such as users, projects, contributions,
+issues, and comments.
+"""
+
 from django.db import models
 from users.models import CustomUser
 from projects.models import Project
 
 
 class Issue(models.Model):
+    """
+    Issue model that represents an issue that users can report in a project.
+
+    This model includes fields like title, description, project,issue_author,
+    assignee, created_time, and updated_time.
+
+    This model includes fields for status, priority, and tag, each of which has
+    a set of predefined choices. The status field can be 'to-do', 'in-progress', or 'finished'.
+    The priority field can be 'low', 'medium', or 'high'. The tag field can be 'bug', 'feature',
+    or 'task'.
+    """
     STATUS_CHOICES = [
             ('to-do', 'To-do'),
             ('in-progress', 'In-progress'),
@@ -40,10 +59,21 @@ class Issue(models.Model):
 
 
 class Comment(models.Model):
+    """
+    Comment model that represents a comment on an issue.
+
+    This model includes fields like description, comment_author, issue, created_time, and updated_time.
+    - the issue the comment is on
+    - the author of the comment
+    - the description of the comment
+    - the date and time the comment was created and last updated
+    Comment model that represents a comment made by a user on an issue.
+
+    This model includes fields like content, issue, comment_author, created_time, and updated_time.
+    """
     description = models.TextField()
     comment_author = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     issue = models.ForeignKey(Issue, on_delete=models.CASCADE)
     created_time = models.DateTimeField(auto_now_add=True)
     updated_time = models.DateTimeField(auto_now=True)
     # you might also want a field to track when the comment was created
-        

@@ -1,3 +1,9 @@
+"""
+This module defines custom permissions for this Django REST Framework app.
+
+It includes a IsOwnerOrReadOnly permission class that only allows owners of an object to edit it.
+"""
+
 from rest_framework import permissions
 
 class IsOwnerOrReadOnly(permissions.BasePermission):
