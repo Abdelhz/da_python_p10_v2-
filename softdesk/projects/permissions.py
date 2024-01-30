@@ -17,7 +17,7 @@ class CanViewProject(permissions.BasePermission):
     :return: Boolean indicating if the user has permission
     """
     def has_object_permission(self, request, view, project):
-        return project.contributors.filter(user=request.user,
+        return project.contributor_set.filter(user=request.user,
                                            permission__in=['can_view', 'can_edit', 'can_delete']).exists()
 
 class CanEditProject(permissions.BasePermission):
@@ -34,7 +34,7 @@ class CanEditProject(permissions.BasePermission):
         bool: True if the user has permission, False otherwise.
     """
     def has_object_permission(self, request, view, project):
-        return project.contributors.filter(user=request.user, permission__in=['can_edit', 'can_delete']).exists()
+        return project.contributor_set.filter(user=request.user, permission__in=['can_edit', 'can_delete']).exists()
 
 class CanDeleteProject(permissions.BasePermission):
     """
@@ -50,7 +50,7 @@ class CanDeleteProject(permissions.BasePermission):
         bool: True if the user has permission to delete the project, False otherwise.
     """
     def has_object_permission(self, request, view, project):
-        return project.contributors.filter(user=request.user, permission='can_delete').exists()
+        return project.contributor_set.filter(user=request.user, permission='can_delete').exists()
 
 class IsProjectAuthor(permissions.BasePermission):
     """

@@ -21,7 +21,7 @@ class ProjectViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         """
-        Return the queryset of projects for the current user.
+        Return the queryset of projects that the current user is a contributor of.
         """
         return Project.objects.filter(contributors=self.request.user)
 
