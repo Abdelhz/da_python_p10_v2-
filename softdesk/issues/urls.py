@@ -12,7 +12,7 @@ from projects.views import ProjectViewSet
 from .views import IssuesViewSet, CommentsViewSet
 
 router = routers.DefaultRouter()
-router.register(r'projects', ProjectViewSet)
+router.register(r'projects', ProjectViewSet, basename='project')
 
 issues_router = nested_routers.NestedDefaultRouter(router, r'projects', lookup='project')
 issues_router.register(r'issues', IssuesViewSet, basename='project-issues')
