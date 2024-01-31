@@ -19,7 +19,7 @@ class IssueSerializer(serializers.ModelSerializer):
         This class defines the model to be used, the fields to be included in the serialization.
         """
         model = Issue
-        fields = ['project', 'title', 'description', 'tag', 'priority', 'status', 'issue_author',
+        fields = ['id', 'project', 'title', 'description', 'tag', 'priority', 'status', 'issue_author',
         'assignee', 'created_time', 'updated_time']
 
 class CommentSerializer(serializers.ModelSerializer):
@@ -35,4 +35,4 @@ class CommentSerializer(serializers.ModelSerializer):
         This class defines the model to be used, the fields to be included in the serialization.
         """
         model = Comment
-        fields = ['description', 'comment_author', 'issue', 'created_time', 'updated_time']
+        fields = ['id', 'description', 'comment_author', 'issue', 'created_time', 'updated_time']

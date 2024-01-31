@@ -12,7 +12,7 @@ from rest_framework import viewsets, permissions, status
 from users.models import CustomUser
 from .models import Issue, Comment
 from .serializers import IssueSerializer, CommentSerializer
-from .permissions import CanAssignIssue, IsIssueAuthor, IsContributor
+from .permissions import CanAssignIssue, IsIssueAuthor, IsIssueContributor, IsCommentAuthor, IsCommentContributor
 
 class IssuesViewSet(viewsets.ModelViewSet):
     """
@@ -28,6 +28,18 @@ class IssuesViewSet(viewsets.ModelViewSet):
         Return the queryset of issues for the specified project ID.
         """
         return Issue.objects.filter(project_id=self.kwargs['project_pk'])
+
+    def create(self, request, *args, **kwargs):
+        """
+        Set project and issue_author automatically.
+        :param request: The request object.
+        :param args: Additional positional arguments.
+        :param kwargs: Additional keyword arguments.
+        :return: The result of the super().create() call.
+        """
+        request.data['project'] = self.kwargs['project_pk']
+        request.data['issue_author'] = request.user.id
+        return super().create(request, *args, **kwargs)
 
     @action(detail=True, methods=['post'])
     def assign(self, request, pk=None):
@@ -61,13 +73,13 @@ class IssuesViewSet(viewsets.ModelViewSet):
         It takes no parameters and returns a list of permission instances.
         """
         if self.action in ['create']:
-            permission_classes = [permissions.IsAuthenticated, IsContributor]
+            permission_classes = [permissions.IsAuthenticated, IsIssueContributor]
         elif self.action in ['update', 'partial_update', 'destroy']:
             permission_classes = [permissions.IsAuthenticated, IsIssueAuthor]
         elif self.action == 'assign':
             permission_classes = [permissions.IsAuthenticated, CanAssignIssue]
         else:
-            permission_classes = [permissions.IsAuthenticated, IsContributor]
+            permission_classes = [permissions.IsAuthenticated, IsIssueContributor]
         return [permission() for permission in permission_classes]
 
 
@@ -86,6 +98,18 @@ class CommentsViewSet(viewsets.ModelViewSet):
         """
         return Comment.objects.filter(issue_id=self.kwargs['issue_pk'])
 
+    def create(self, request, *args, **kwargs):
+        """
+        Set comment_author and issue automatically.
+        :param request: The request object.
+        :param args: Additional positional arguments.
+        :param kwargs: Additional keyword arguments.
+        :return: The result of the super().create() call.
+        """
+        request.data['comment_author'] = request.user.id
+        request.data['issue'] = self.kwargs['issue_pk']
+        return super().create(request, *args, **kwargs)
+
     def get_permissions(self):
         """
         Retrieve the permissions required for the specified action.
@@ -93,9 +117,9 @@ class CommentsViewSet(viewsets.ModelViewSet):
         :return type: list
         """
         if self.action in ['create']:
-            permission_classes = [permissions.IsAuthenticated, IsContributor]
+            permission_classes = [permissions.IsAuthenticated, IsCommentContributor]
         elif self.action in ['update', 'partial_update', 'destroy']:
-            permission_classes = [permissions.IsAuthenticated, IsIssueAuthor]
+            permission_classes = [permissions.IsAuthenticated, IsCommentAuthor]
         else:
-            permission_classes = [permissions.IsAuthenticated, IsContributor]
+            permission_classes = [permissions.IsAuthenticated, IsCommentContributor]
         return [permission() for permission in permission_classes]

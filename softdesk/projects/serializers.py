@@ -11,6 +11,8 @@ class ProjectSerializer(serializers.ModelSerializer):
 
     This serializer includes all fields of the Project model in the serialization.
     """
+    project_author = serializers.ReadOnlyField(source='project_author.username')
+
     class Meta:
         """
         Meta class for ProjectSerializer.
@@ -18,7 +20,7 @@ class ProjectSerializer(serializers.ModelSerializer):
         This class defines the model to be used, the fields to be included in the serialization.
         """
         model = Project
-        fields = ['title', 'description', 'contributors', 'project_type', 'project_author', 'created_time',
+        fields = ['id', 'title', 'description', 'contributors', 'project_type', 'project_author', 'created_time',
         'updated_time']
 
 class ContributorSerializer(serializers.ModelSerializer):
@@ -34,5 +36,5 @@ class ContributorSerializer(serializers.ModelSerializer):
         This class defines the model to be used, the fields to be included in the serialization.
         """
         model = Contributor
-        fields = ['user', 'project', 'date_given_permission', 'role', 'permission',
+        fields = ['id', 'user', 'project', 'role', 'permission', 'can_assign_issues',
         'created_time', 'updated_time']

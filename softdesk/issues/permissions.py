@@ -7,9 +7,9 @@ and if a user can assign issues.
 
 from rest_framework import permissions
 
-class IsContributor(permissions.BasePermission):
+class IsIssueContributor(permissions.BasePermission):
     """
-    Permission class to check if a user is a contributor to a project.
+    Permission class to check if a user is a contributor to the project.
     
     Args:
         self: The object itself.
@@ -20,12 +20,28 @@ class IsContributor(permissions.BasePermission):
     Returns:
         bool: True if the request user has permission, False otherwise.
     """
-    def has_object_permission(self, request, view, obj):
-        return obj.project.contributors.filter(id=request.user.id).exists()
+    def has_object_permission(self, request, view, issue):
+        return issue.project.contributor_set.filter(user=request.user).exists()
+
+class IsCommentContributor(permissions.BasePermission):
+    """
+    Permission class to check if a user is a contributor to the project.
+    
+    Args:
+        self: The object itself.
+        request: The request being made.
+        view: The view that is being accessed.
+        obj: The object being accessed.
+    
+    Returns:
+        bool: True if the request user has permission, False otherwise.
+    """
+    def has_object_permission(self, request, view, comment):
+        return comment.issue.project.contributor_set.filter(user=request.user).exists()
 
 class IsIssueAuthor(permissions.BasePermission):
     """
-    Permission class to check if a user is the author of an issue.
+    Permission class to check if a user is the author of the issue.
         
     Parameters:
         self (object): The current instance of the class.
@@ -36,8 +52,8 @@ class IsIssueAuthor(permissions.BasePermission):
     Returns:
         bool: True if the requesting user has permission, False otherwise.
     """
-    def has_object_permission(self, request, view, obj):
-        return obj.issue_author == request.user
+    def has_object_permission(self, request, view, issue):
+        return issue.issue_author == request.user
 
 class CanAssignIssue(permissions.BasePermission):
     """
@@ -53,3 +69,16 @@ class CanAssignIssue(permissions.BasePermission):
     """
     def has_object_permission(self, request, view, obj):
         return obj.project.contributors.filter(user=request.user, can_assign_issues=True).exists()
+
+class IsCommentAuthor(permissions.BasePermission):
+
+    """
+    Check if the user is the author of the comment.
+    
+    :param request: The request object
+    :param view: The view object
+    :param comment: The comment object
+    :return: True if the user is the author of the comment, False otherwise.
+    """
+    def has_object_permission(self, request, view, comment):
+        return comment.comment_author == request.user

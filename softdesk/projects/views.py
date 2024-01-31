@@ -74,6 +74,13 @@ class ContributorViewSet(viewsets.ModelViewSet):
         """
         return Contributor.objects.filter(project_id=self.kwargs['project_pk'])
 
+    def create(self, request, *args, **kwargs):
+        """
+        Override the create method to automatically set the project field.
+        """
+        request.data['project'] = self.kwargs['project_pk']
+        return super().create(request, *args, **kwargs)
+
     def get_permissions(self):
         """
         Return the Contributor queryset filtered by the project_id from the kwargs.
