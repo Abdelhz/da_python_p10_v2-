@@ -1,0 +1,94 @@
+|____db.sqlite3
+|____issues
+| |____admin.py
+| |____apps.py
+| |____migrations
+| | |____0001_initial.py
+| | |____0002_initial.py
+| | |______init__.py
+| | |______pycache__
+| | | |____0001_initial.cpython-311.pyc
+| | | |____0002_initial.cpython-311.pyc
+| | | |______init__.cpython-311.pyc
+| |____models.py
+| |____permissions.py
+| |____serializers.py
+| |____tests.py
+| |____urls.py
+| |____views.py
+| |______init__.py
+| |______pycache__
+| | |____admin.cpython-311.pyc
+| | |____apps.cpython-311.pyc
+| | |____models.cpython-311.pyc
+| | |____permissions.cpython-311.pyc
+| | |____serializers.cpython-311.pyc
+| | |____urls.cpython-311.pyc
+| | |____views.cpython-311.pyc
+| | |______init__.cpython-311.pyc
+|____manage.py
+|____projects
+| |____admin.py
+| |____apps.py
+| |____migrations
+| | |____0001_initial.py
+| | |____0002_initial.py
+| | |____0003_alter_project_options_and_more.py
+| | |______init__.py
+| | |______pycache__
+| | | |____0001_initial.cpython-311.pyc
+| | | |____0002_initial.cpython-311.pyc
+| | | |____0003_alter_project_options_and_more.cpython-311.pyc
+| | | |______init__.cpython-311.pyc
+| |____models.py
+| |____permissions.py
+| |____serializers.py
+| |____tests.py
+| |____urls.py
+| |____views.py
+| |______init__.py
+| |______pycache__
+| | |____admin.cpython-311.pyc
+| | |____apps.cpython-311.pyc
+| | |____models.cpython-311.pyc
+| | |____permissions.cpython-311.pyc
+| | |____serializers.cpython-311.pyc
+| | |____urls.cpython-311.pyc
+| | |____views.cpython-311.pyc
+| | |______init__.cpython-311.pyc
+|____softdesk
+| |____asgi.py
+| |____settings.py
+| |____urls.py
+| |____wsgi.py
+| |______init__.py
+| |______pycache__
+| | |____settings.cpython-311.pyc
+| | |____urls.cpython-311.pyc
+| | |____wsgi.cpython-311.pyc
+| | |______init__.cpython-311.pyc
+|____users
+| |____admin.py
+| |____apps.py
+| |____migrations
+| | |____0001_initial.py
+| | |______init__.py
+| | |______pycache__
+| | | |____0001_initial.cpython-311.pyc
+| | | |______init__.cpython-311.pyc
+| |____models.py
+| |____permissions.py
+| |____serializers.py
+| |____tests.py
+| |____urls.py
+| |____views.py
+| |______init__.py
+| |______pycache__
+| | |____admin.cpython-311.pyc
+| | |____apps.cpython-311.pyc
+| | |____models.cpython-311.pyc
+| | |____permissions.cpython-311.pyc
+| | |____serializers.cpython-311.pyc
+| | |____urls.cpython-311.pyc
+| | |____views.cpython-311.pyc
+| | |______init__.cpython-311.pyc
