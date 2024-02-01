@@ -55,21 +55,6 @@ class IsIssueAuthor(permissions.BasePermission):
     def has_object_permission(self, request, view, issue):
         return issue.issue_author == request.user
 
-class CanAssignIssue(permissions.BasePermission):
-    """
-    Permission class to check if a user has the permission to assign issues.
-    
-    Args:
-        self: The object itself.
-        request: The request made.
-        view: The view used.
-        obj: The object to be checked for permission.
-    Returns:
-        bool: True if the user has permission, False otherwise.
-    """
-    def has_object_permission(self, request, view, obj):
-        return obj.project.contributors.filter(user=request.user, can_assign_issues=True).exists()
-
 class IsCommentAuthor(permissions.BasePermission):
 
     """

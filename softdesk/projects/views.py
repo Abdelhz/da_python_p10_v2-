@@ -8,7 +8,7 @@ The viewset includes custom logic for determining the queryset and the permissio
 from rest_framework import viewsets, permissions
 from .models import Project, Contributor
 from .serializers import ProjectSerializer, ContributorSerializer
-from .permissions import CanViewProject, CanEditProject, CanDeleteProject, IsProjectAuthor, IsProjectAuthorOrContributor
+from .permissions import CanViewProject, CanEditProject, CanDeleteProject, IsProjectAuthor, IsProjectAuthorOrContributor, IsContributorToProject
 
 class ProjectViewSet(viewsets.ModelViewSet):
     """
@@ -86,7 +86,7 @@ class ContributorViewSet(viewsets.ModelViewSet):
         Return the Contributor queryset filtered by the project_id from the kwargs.
         """
         if self.action in ['list', 'retrieve']:
-            permission_classes = [permissions.IsAuthenticated, IsProjectAuthorOrContributor]
+            permission_classes = [permissions.IsAuthenticated, IsContributorToProject]
 
         elif self.action == 'create':
             permission_classes = [permissions.IsAuthenticated, IsProjectAuthor]

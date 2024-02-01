@@ -75,3 +75,16 @@ class IsProjectAuthorOrContributor(permissions.BasePermission):
     """
     def has_object_permission(self, request, view, contributor):
         return contributor.project.project_author == request.user or contributor.user == request.user
+
+
+class IsContributorToProject(permissions.BasePermission):
+    """
+    Permission class to check if a user is a contributor to the same project as the contributor in question.
+    
+    :param request: the request object
+    :param view: the view object
+    :param contributor: the contributor object
+    :return: True if the user is a contributor to the same project, False otherwise
+    """
+    def has_object_permission(self, request, view, contributor):
+        return contributor.project.contributor_set.filter(user=request.user).exists()

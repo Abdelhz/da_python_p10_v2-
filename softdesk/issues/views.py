@@ -12,7 +12,7 @@ from rest_framework import viewsets, permissions, status
 from users.models import CustomUser
 from .models import Issue, Comment
 from .serializers import IssueSerializer, CommentSerializer
-from .permissions import CanAssignIssue, IsIssueAuthor, IsIssueContributor, IsCommentAuthor, IsCommentContributor
+from .permissions import IsIssueAuthor, IsIssueContributor, IsCommentAuthor, IsCommentContributor
 
 class IssuesViewSet(viewsets.ModelViewSet):
     """
@@ -39,6 +39,7 @@ class IssuesViewSet(viewsets.ModelViewSet):
         """
         request.data['project'] = self.kwargs['project_pk']
         request.data['issue_author'] = request.user.id
+        request.data.setdefault('assignee', request.user.id)
         return super().create(request, *args, **kwargs)
 
     @action(detail=True, methods=['post'])
@@ -56,7 +57,10 @@ class IssuesViewSet(viewsets.ModelViewSet):
         user_id = request.data.get('user_id')  # get the user_id from the request data
 
         # check if the user is a contributor to the project
-        if not issue.project.contributors.filter(id=user_id).exists():
+        if not issue.project.contributor_set.filter(id=user_id).exists():
+            # set the assignee back to the issue_author if the user does not exist or is not a contributor
+            issue.assignee = issue.issue_author
+            issue.save()
             return Response({'error': 'User is not a contributor to the project'}, status=status.HTTP_400_BAD_REQUEST)
 
         # get the user
@@ -74,10 +78,8 @@ class IssuesViewSet(viewsets.ModelViewSet):
         """
         if self.action in ['create']:
             permission_classes = [permissions.IsAuthenticated, IsIssueContributor]
-        elif self.action in ['update', 'partial_update', 'destroy']:
+        elif self.action in ['update', 'partial_update', 'destroy', 'assign']:
             permission_classes = [permissions.IsAuthenticated, IsIssueAuthor]
-        elif self.action == 'assign':
-            permission_classes = [permissions.IsAuthenticated, CanAssignIssue]
         else:
             permission_classes = [permissions.IsAuthenticated, IsIssueContributor]
         return [permission() for permission in permission_classes]

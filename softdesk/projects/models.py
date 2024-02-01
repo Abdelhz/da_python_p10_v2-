@@ -50,7 +50,6 @@ class Contributor(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
     role = models.CharField(max_length=20, choices=role_choices, default='contributor')
-    permission = models.CharField(max_length=20, choices=PROJECT_PERMISSION_CHOICES)
-    can_assign_issues = models.BooleanField(default=False)
+    permission = models.CharField(max_length=20, choices=PROJECT_PERMISSION_CHOICES, default='can_view')
     created_time = models.DateTimeField(auto_now_add=True)
     updated_time = models.DateTimeField(auto_now=True)

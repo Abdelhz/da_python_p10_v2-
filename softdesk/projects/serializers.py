@@ -36,5 +36,5 @@ class ContributorSerializer(serializers.ModelSerializer):
         This class defines the model to be used, the fields to be included in the serialization.
         """
         model = Contributor
-        fields = ['id', 'user', 'project', 'role', 'permission', 'can_assign_issues',
+        fields = ['id', 'user', 'project', 'role', 'permission',
         'created_time', 'updated_time']

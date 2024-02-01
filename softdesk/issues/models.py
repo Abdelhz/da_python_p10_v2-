@@ -52,7 +52,8 @@ class Issue(models.Model):
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='to-do')
     # Contributors directly related to the issue (author and assignee)
     issue_author = models.ForeignKey(CustomUser, related_name='created_issues', on_delete=models.CASCADE)
-    assignee = models.ForeignKey(CustomUser, related_name='assigned_issues', on_delete=models.CASCADE)
+    assignee = models.ForeignKey(CustomUser, related_name='assigned_issues', on_delete=models.SET_NULL, null=True)
+    # assignee = models.ForeignKey(CustomUser, related_name='assigned_issues', on_delete=models.PROTECT)
     # date and time of the issue
     created_time = models.DateTimeField(auto_now_add=True)
     updated_time = models.DateTimeField(auto_now=True)
